@@ -14,10 +14,12 @@ __status__ = "Development"
 class Seater:
     
     # this regular expression will give us the command and the rectangular bounding box
-    # https://docs.python.org/2/library/re.html#re.MatchObject.group
     pat = re.compile("(.*) (\d+),(\d+) through (\d+),(\d+)")
+    #This function defines the dimension of the array
     def __init__(self, size=1000):
+        #set the number of columns and rows of the array to size = 1000
         self.nrows, self.ncols = size, size 
+        #create a 2-dimensional array using list comprehension  
         self.room = [ [False]*self.ncols for row in range(self.nrows)]
     
     def get_cmd(self, line):
@@ -44,20 +46,24 @@ class Seater:
             pass
         return
     
+    #occupy function iterates over each row and column of the selected area contained in the self.room array 
+    #(using a nested loop) and set each value of the area contained in the room array as True (= occupied)
     def occupy(self, x1, y1, x2, y2):
         for row in range(x1,x2+1): 
             for col in range(y1,y2+1): 
                 self.room[row][col] = True
         
 
-    
+    #empty function iterates over each row and column of the selected area contained in the self.room array 
+    #(using a nested loop) and set each value of the area contained in the room array as false (= empty)
     def empty(self, x1, y1, x2, y2):
         for row in range(x1,x2+1): 
             for col in range(y1,y2+1): 
                 self.room[row][col] = False
         
-        
-    
+    #toggle function iterates over each row and column of the selected area contained in the self.room array 
+    #(using a nested loop) and if the values are set them as True, it will set as false(empty the sits) and 
+    #if the values are set as False, it will set them as True(fill the sits) and   
     def toggle(self, x1, y1, x2, y2):
         for row in range(x1,x2+1): 
             for col in range(y1,y2+1): 
@@ -65,8 +71,8 @@ class Seater:
                     self.empty(row, col, row, col)
                 else:
                     self.occupy(row, col, row, col)
-        
-    
+    #number_occupied function iterates over each row and column of the room array and it will count the
+    #number of time it will find an True instance (= occupied sit)   
     def number_occupied(self):
         count_full =0 
         for row in range(self.nrows): 
