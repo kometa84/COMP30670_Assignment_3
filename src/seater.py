@@ -17,13 +17,13 @@ class Seater:
     pat = re.compile("(.*) (\d+),(\d+) through (\d+),(\d+)")
     #This function defines the dimension of the array
     def __init__(self, size=1000):
-        #set the number of columns and rows of the array to size = 1000
+        #set the number of columns and rows of the array of size = 1000
         self.nrows, self.ncols = size, size 
-        #create a 2-dimensional array using list comprehension  
+        #create a 2-dimensional array 
         self.room = [ [False]*self.ncols for row in range(self.nrows)]
     
     def get_cmd(self, line):
-        #take the user input and converted to code
+        '''take user input and converted them to integer cordinates'''
         cmd, x1, y1, x2, y2 = Seater.pat.match(line).groups()
         x1, x2, y1, y2 = int(x1), int(x2), int(y1), int(y2)
         
@@ -46,25 +46,32 @@ class Seater:
             pass
         return
     
-    #occupy function iterates over each row and column of the selected area contained in the self.room array 
-    #(using a nested loop) and set each value of the area contained in the room array as True (= occupied)
     def occupy(self, x1, y1, x2, y2):
+        '''Function for setting seat as occupied
+        
+        The function iterates over each row and column of the selected area contained in the self.room array (using a nested loop) 
+        and set each value of the area contained in the room array as True (= occupied)'''
         for row in range(x1,x2+1): 
             for col in range(y1,y2+1): 
                 self.room[row][col] = True
         
 
-    #empty function iterates over each row and column of the selected area contained in the self.room array 
-    #(using a nested loop) and set each value of the area contained in the room array as false (= empty)
     def empty(self, x1, y1, x2, y2):
+        '''Function for setting seat as empty
+        
+        The function iterates over each row and column of the selected area contained in the self.room array 
+    #(using a nested loop) and set each value of the area contained in the room array as false (= empty)'''
         for row in range(x1,x2+1): 
             for col in range(y1,y2+1): 
                 self.room[row][col] = False
         
-    #toggle function iterates over each row and column of the selected area contained in the self.room array 
-    #(using a nested loop) and if the values are set them as True, it will set as false(empty the sits) and 
-    #if the values are set as False, it will set them as True(fill the sits) and   
+    #toggle function  and   
     def toggle(self, x1, y1, x2, y2):
+        '''Function for setting seat as empty
+        
+        The function iterates over each row and column of the selected area contained in the self.room array 
+        (using a nested loop) and if the values are set as True, it will set as false(empty the sits) and 
+        if the values are set as False, it will set them as True(fill the sits)'''
         for row in range(x1,x2+1): 
             for col in range(y1,y2+1): 
                 if self.room[row][col] == True:
@@ -74,6 +81,10 @@ class Seater:
     #number_occupied function iterates over each row and column of the room array and it will count the
     #number of time it will find an True instance (= occupied sit)   
     def number_occupied(self):
+        '''Function for counting the number of occupied seats
+        
+        The function iterates over each row and column of the room array and it will count the number of time it will find 
+        an True instance (= occupied sit)  '''
         count_full =0 
         for row in range(self.nrows): 
             for col in range(self.ncols): 
